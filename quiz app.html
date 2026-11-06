@@ -1,0 +1,1088 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detective Files</title>
+
+<style>
+:root {
+  --bg:#101b19;
+  --panel:#192824;
+  --panel2:#20352e;
+  --gold:#e9bd78;
+  --green:#8dd5ad;
+  --orange:#e99469;
+  --text:#f3f0e7;
+  --muted:#a5b3a9;
+}
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body {
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse at 15% 5%,#315b4555,transparent 40%),
+    radial-gradient(ellipse at 95% 80%,#9d61302b,transparent 35%),
+    var(--bg);
+  min-height:100vh;
+}
+
+button {font-family:Arial;cursor:pointer;}
+
+.container {
+  width:min(1100px,92%);
+  margin:auto;
+}
+
+header {
+  height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #ffffff15;
+}
+
+.logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-mark {
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(145deg,#d5a96b,#718e69);
+}
+
+.logo-mark svg {width:28px;height:28px;}
+
+.logo h1 {
+  font-size:17px;
+  letter-spacing:1px;
+}
+
+.logo small {
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:2px;
+  margin-top:4px;
+}
+
+.xp-pill {
+  padding:11px 17px;
+  border:1px solid #e9bd7855;
+  color:var(--gold);
+  border-radius:30px;
+  background:#e9bd7810;
+  font-size:13px;
+}
+
+main {padding:38px 0 65px;}
+
+.hero {
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  align-items:center;
+  gap:30px;
+  min-height:280px;
+  margin-bottom:30px;
+}
+
+.eyebrow {
+  color:var(--gold);
+  letter-spacing:3px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:17px;
+}
+
+.hero h2 {
+  font-size:clamp(38px,6vw,66px);
+  line-height:1.04;
+  letter-spacing:-2px;
+}
+
+.hero h2 span {
+  color:var(--green);
+}
+
+.hero p {
+  max-width:430px;
+  color:var(--muted);
+  line-height:1.8;
+  margin-top:18px;
+  font-size:14px;
+}
+
+.hero-art {
+  height:245px;
+  position:relative;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border:1px solid #d5b27833;
+  border-radius:30px;
+  background:
+    linear-gradient(135deg,#314d3c,#1b302b 55%,#49332b);
+}
+
+.hero-art::before {
+  content:"";
+  width:180px;
+  height:180px;
+  border:1px solid #e9bd7866;
+  border-radius:50%;
+  position:absolute;
+}
+
+.hero-art::after {
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  border:1px dashed #e9bd7855;
+  border-radius:50%;
+}
+
+.hero-art svg {
+  position:relative;
+  z-index:1;
+  width:160px;
+  filter:drop-shadow(0 12px 18px #0008);
+}
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+  margin:25px 0 38px;
+}
+
+.stat {
+  padding:20px;
+  border:1px solid #ffffff13;
+  border-radius:16px;
+  background:#ffffff08;
+}
+
+.stat strong {
+  display:block;
+  font-size:26px;
+  color:var(--gold);
+  margin-bottom:7px;
+}
+
+.stat span {
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+.section-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:17px;
+}
+
+.section-heading h3 {font-size:20px;}
+
+.section-heading span {
+  font-size:11px;
+  color:var(--muted);
+}
+
+.case-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+
+.case-card {
+  overflow:hidden;
+  border-radius:19px;
+  border:1px solid #ffffff16;
+  background:linear-gradient(145deg,#263a31,#17251f);
+  transition:.3s;
+}
+
+.case-card:hover {
+  transform:translateY(-5px);
+  border-color:var(--gold);
+}
+
+.case-art {
+  height:160px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.case-art svg {
+  width:110px;
+  height:110px;
+  position:relative;
+  z-index:1;
+}
+
+.art-one {background:linear-gradient(135deg,#586a45,#a88b5c);}
+.art-two {background:linear-gradient(135deg,#493b60,#b27769);}
+.art-three {background:linear-gradient(135deg,#274d5a,#638d80);}
+
+.case-body {padding:20px;}
+
+.case-number {
+  color:var(--gold);
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+.case-body h3 {
+  font-size:19px;
+  margin:10px 0;
+}
+
+.case-body p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  min-height:61px;
+}
+
+.case-meta {
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:10px;
+  margin:16px 0;
+}
+
+.primary {
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:10px;
+  color:#17251f;
+  font-weight:bold;
+  background:linear-gradient(100deg,#e9bd78,#91cba1);
+  transition:.2s;
+}
+
+.primary:hover {filter:brightness(1.1);}
+
+.secondary {
+  background:#ffffff0a;
+  color:white;
+  border:1px solid #ffffff25;
+  padding:11px 17px;
+  border-radius:9px;
+}
+
+#game,#result {display:none;}
+
+.game-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  gap:12px;
+}
+
+.game-header h2 {
+  font-size:25px;
+  margin-top:7px;
+}
+
+.game-label {
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:2px;
+  font-weight:bold;
+}
+
+.progress-info {
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:10px;
+}
+
+.progress-track {
+  height:6px;
+  background:#ffffff15;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:24px;
+}
+
+.progress-fill {
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#8dd5ad,#e9bd78);
+  transition:.4s;
+}
+
+.game-layout {
+  display:grid;
+  grid-template-columns:1.5fr .8fr;
+  gap:18px;
+}
+
+.question-panel,.evidence-panel {
+  background:linear-gradient(145deg,#22372e,#18251f);
+  border:1px solid #ffffff18;
+  border-radius:20px;
+  padding:25px;
+}
+
+.tag {
+  color:var(--gold);
+  background:#e9bd7815;
+  border:1px solid #e9bd7833;
+  display:inline-block;
+  padding:8px 12px;
+  font-size:10px;
+  letter-spacing:1px;
+  border-radius:30px;
+}
+
+.question-panel h3 {
+  font-size:24px;
+  line-height:1.4;
+  margin:22px 0 12px;
+}
+
+.question-desc {
+  color:var(--muted);
+  line-height:1.7;
+  font-size:13px;
+  margin-bottom:23px;
+}
+
+.answers {
+  display:grid;
+  gap:11px;
+}
+
+.answer {
+  display:flex;
+  align-items:center;
+  text-align:left;
+  gap:13px;
+  border:1px solid #ffffff1a;
+  color:var(--text);
+  background:#ffffff08;
+  padding:14px;
+  border-radius:11px;
+  font-size:13px;
+  transition:.2s;
+}
+
+.answer:hover:not(:disabled) {
+  border-color:var(--green);
+  background:#8dd5ad13;
+}
+
+.letter {
+  display:grid;
+  place-items:center;
+  min-width:28px;
+  height:28px;
+  background:#ffffff12;
+  border-radius:8px;
+  color:var(--gold);
+  font-weight:bold;
+}
+
+.answer.correct {
+  border-color:var(--green);
+  background:#8dd5ad18;
+}
+
+.answer.wrong {
+  border-color:#ed8a83;
+  background:#ed8a8318;
+}
+
+.answer:disabled {cursor:default;}
+
+.feedback {
+  display:none;
+  padding:14px;
+  margin-top:16px;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.feedback.success {
+  display:block;
+  color:#a9e9be;
+  background:#8dd5ad15;
+}
+
+.feedback.error {
+  display:block;
+  color:#f0aaa1;
+  background:#ed8a8315;
+}
+
+.next {
+  display:none;
+  margin-top:15px;
+}
+
+.evidence-panel h3 {
+  font-size:19px;
+  margin-bottom:9px;
+}
+
+.evidence-panel>p {
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.clue {
+  border:1px solid #ffffff17;
+  border-radius:11px;
+  padding:14px;
+  margin-bottom:10px;
+  background:#ffffff07;
+  opacity:.5;
+}
+
+.clue.unlocked {
+  opacity:1;
+  border-color:#8dd5ad77;
+  background:#8dd5ad10;
+}
+
+.clue strong {
+  display:block;
+  font-size:10px;
+  color:var(--gold);
+  margin-bottom:8px;
+  letter-spacing:1px;
+}
+
+.clue span {
+  font-size:12px;
+  line-height:1.6;
+}
+
+.lives {
+  color:#e99480;
+  font-size:20px;
+  margin:20px 0 10px;
+  letter-spacing:4px;
+}
+
+.game-xp {
+  color:var(--gold);
+  font-size:13px;
+}
+
+#result {
+  max-width:620px;
+  margin:30px auto;
+  padding:35px;
+  text-align:center;
+  border:1px solid #ffffff20;
+  background:linear-gradient(145deg,#294435,#192b24);
+  border-radius:22px;
+}
+
+.result-art {
+  width:100px;
+  margin:0 auto 20px;
+}
+
+#result h2 {
+  color:var(--gold);
+  font-size:34px;
+}
+
+#result p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+  margin:15px 0;
+}
+
+.result-score {
+  color:var(--green);
+  font-size:40px;
+  font-weight:bold;
+  margin:20px;
+}
+
+.result-details {
+  padding:18px;
+  border:1px solid #ffffff18;
+  border-radius:12px;
+  font-size:13px;
+  line-height:2;
+  color:#d5ded5;
+  margin:20px 0;
+  text-align:left;
+}
+
+footer {
+  text-align:center;
+  border-top:1px solid #ffffff15;
+  padding:25px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+@media(max-width:750px) {
+  .hero {grid-template-columns:1fr;}
+  .hero-art {height:190px;}
+  .case-grid {grid-template-columns:1fr;}
+  .game-layout {grid-template-columns:1fr;}
+  .stats {gap:8px;}
+  .stat {padding:14px 8px;}
+  .stat strong {font-size:21px;}
+  .game-header h2 {font-size:20px;}
+  .question-panel,.evidence-panel {padding:19px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="container">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="17" cy="17" r="10" stroke="#18251f" stroke-width="3"/>
+        <path d="M24 24L34 34" stroke="#18251f" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="17" cy="17" r="4" fill="#18251f"/>
+      </svg>
+    </div>
+    <div>
+      <h1>DETECTIVE FILES</h1>
+      <small>THE ART OF INVESTIGATION</small>
+    </div>
+  </div>
+  <div class="xp-pill">✦ <span id="headerXP">0</span> XP</div>
+</header>
+
+<main class="container">
+
+<section id="home">
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow">CONFIDENTIAL • CASE DIVISION</div>
+      <h2>Every clue<br>has a <span>story.</span></h2>
+      <p>
+        Step into the detective's world. Examine evidence,
+        solve challenging puzzles and uncover the truth
+        hidden behind every mystery.
+      </p>
+    </div>
+
+    <div class="hero-art">
+      <svg viewBox="0 0 200 200" fill="none">
+        <path d="M43 75L65 33L145 33L169 75Z" fill="#263c32" stroke="#e9bd78" stroke-width="3"/>
+        <path d="M36 76Q105 59 175 76L167 88Q105 73 43 88Z" fill="#d5a96b"/>
+        <path d="M66 91Q100 70 135 91L149 159H52Z" fill="#18251f" stroke="#8dd5ad" stroke-width="2"/>
+        <path d="M66 103Q100 78 134 103L124 122H76Z" fill="#d2a66c"/>
+        <path d="M77 122Q100 110 123 122L136 148H64Z" fill="#b77c54"/>
+        <circle cx="91" cy="111" r="3" fill="#17251f"/>
+        <circle cx="110" cy="111" r="3" fill="#17251f"/>
+        <path d="M92 130Q101 137 111 130" stroke="#17251f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M73 158L56 181M127 158L144 181" stroke="#e9bd78" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="160" cy="125" r="15" stroke="#e9bd78" stroke-width="3"/>
+        <path d="M171 136L185 150" stroke="#e9bd78" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <strong id="totalSolved">0</strong>
+      <span>CASES SOLVED</span>
+    </div>
+    <div class="stat">
+      <strong id="bestScore">0</strong>
+      <span>BEST XP</span>
+    </div>
+    <div class="stat">
+      <strong id="rank">ROOKIE</strong>
+      <span>DETECTIVE RANK</span>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <h3>Investigation Files</h3>
+    <span>SELECT A MYSTERY TO BEGIN</span>
+  </div>
+
+  <div class="case-grid" id="caseGrid"></div>
+
+</section>
+
+<section id="game">
+
+  <div class="game-header">
+    <div>
+      <div class="game-label">ACTIVE INVESTIGATION</div>
+      <h2 id="caseTitle"></h2>
+    </div>
+    <button class="secondary" onclick="goHome()">Exit Case</button>
+  </div>
+
+  <div class="progress-info">
+    <span id="questionCount"></span>
+    <span id="progressPercent">0%</span>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-fill" id="progressBar"></div>
+  </div>
+
+  <div class="game-layout">
+
+    <div class="question-panel">
+      <div class="tag" id="questionTag"></div>
+      <h3 id="questionText"></h3>
+      <p class="question-desc" id="questionDesc"></p>
+
+      <div class="answers" id="answers"></div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <button class="primary next" id="nextBtn" onclick="nextQuestion()">
+        Continue →
+      </button>
+    </div>
+
+    <aside class="evidence-panel">
+      <h3>Evidence Archive</h3>
+      <p>Correct answers reveal important information about the case.</p>
+
+      <div id="clueList"></div>
+
+      <div class="lives" id="lives"></div>
+      <div class="game-xp">✦ <span id="gameXP">0</span> XP collected</div>
+    </aside>
+
+  </div>
+</section>
+
+<section id="result">
+  <svg class="result-art" viewBox="0 0 100 100" fill="none">
+    <circle cx="50" cy="50" r="40" stroke="#e9bd78" stroke-width="3"/>
+    <path d="M29 51L44 66L73 34" stroke="#8dd5ad" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <h2 id="resultTitle"></h2>
+  <p id="resultDescription"></p>
+  <div class="result-score" id="finalScore"></div>
+  <div class="result-details" id="resultDetails"></div>
+
+  <button class="primary" onclick="goHome()">Return to Headquarters</button>
+  <br><br>
+  <button class="secondary" onclick="replayCase()">Replay Investigation ↻</button>
+</section>
+
+</main>
+
+<footer>
+  DETECTIVE FILES • THINK DEEPER. LOOK CLOSER. FIND THE TRUTH.
+</footer>
+
+<script>
+
+// CASE DATABASE
+
+const cases = [
+{
+ id:1,
+ title:"The Missing Diamond",
+ icon:"diamond",
+ art:"art-one",
+ difficulty:"EASY",
+ category:"LOGIC & OBSERVATION",
+ description:"A priceless diamond disappears from a locked museum. Three people were nearby. Find the truth.",
+ questions:[
+  {
+   question:"The alarm activated at 9 PM. The guard says he was outside at 8 PM. What should you investigate first?",
+   desc:"Start by checking the timeline.",
+   options:["The guard's location at 9 PM","Last month's visitor list","The museum wall color","The diamond's market value"],
+   answer:0,
+   explanation:"The guard's location at the exact time of the alarm is important evidence.",
+   clue:"The guard was seen near the east entrance at 9 PM."
+  },
+  {
+   question:"A witness saw someone carrying a large empty box into the museum. What might this suggest?",
+   desc:"Think about how an object could be transported.",
+   options:["They were delivering paintings","The box could have concealed something","They were cleaning","They were looking for an exit"],
+   answer:1,
+   explanation:"The box might have been used to conceal and transport the diamond.",
+   clue:"A large box was found in the storage room."
+  },
+  {
+   question:"A camera shows someone moving the diamond. What is the most useful next step?",
+   desc:"Use the recording as evidence.",
+   options:["Delete it","Ignore it","Check the timestamp and identify the person","Close the museum"],
+   answer:2,
+   explanation:"The timestamp and identity can help establish what happened.",
+   clue:"The recording shows someone wearing a museum staff uniform."
+  }
+ ],
+ verdict:"The evidence points toward someone with access to the museum storage area. The camera recording and timeline provide the strongest leads."
+},
+{
+ id:2,
+ title:"The Haunted Mansion",
+ icon:"house",
+ art:"art-two",
+ difficulty:"MEDIUM",
+ category:"SCIENCE & REASONING",
+ description:"Strange sounds echo through an abandoned mansion every midnight. Discover their possible source.",
+ questions:[
+  {
+   question:"A mysterious noise happens at exactly midnight every night. What should you investigate?",
+   desc:"Look for something that operates at a regular time.",
+   options:["A random earthquake","A mechanical device on a timer","A silent room","An invisible visitor"],
+   answer:1,
+   explanation:"A timer-controlled device could explain a sound that repeats at a fixed time.",
+   clue:"An old mechanical clock is near the staircase."
+  },
+  {
+   question:"The sound becomes louder near an open window. What could explain this?",
+   desc:"Consider how sound travels around buildings.",
+   options:["Wind may carry or amplify the sound","The room becomes smaller","The walls change color","The clock disappears"],
+   answer:0,
+   explanation:"Wind and openings can affect how sound travels and is perceived.",
+   clue:"The window rattles whenever strong wind blows."
+  },
+  {
+   question:"You find a loose metal panel near the window. How should you test your theory?",
+   desc:"A good investigation uses repeatable observations.",
+   options:["Assume it is haunted","Ignore the panel","Observe whether the noise occurs when the panel moves","Paint the panel"],
+   answer:2,
+   explanation:"Comparing the sound with the panel's movement helps test whether it is the source.",
+   clue:"The panel vibrates when the wind passes through."
+  }
+ ],
+ verdict:"Wind causes a loose metal panel to vibrate, providing a plausible physical explanation for the mysterious sound."
+},
+{
+ id:3,
+ title:"The Lost Space Signal",
+ icon:"satellite",
+ art:"art-three",
+ difficulty:"HARD",
+ category:"SCIENCE & TECHNOLOGY",
+ description:"A research station receives a mysterious signal from deep space. Analyze the evidence.",
+ questions:[
+  {
+   question:"A radio telescope receives an unusual signal. What should scientists examine first?",
+   desc:"Establish the characteristics of the signal.",
+   options:["Its color","Its frequency and pattern","The telescope paint","The station furniture"],
+   answer:1,
+   explanation:"Frequency and patterns help researchers characterize radio signals.",
+   clue:"The signal repeats at regular intervals."
+  },
+  {
+   question:"The signal repeats every 10 seconds with nearly identical timing. What should researchers do?",
+   desc:"Look for similarities with known sources.",
+   options:["Compare it with natural and artificial signals","Declare it alien immediately","Switch off all computers","Ignore the timing"],
+   answer:0,
+   explanation:"Comparing it with known sources is an important scientific investigation step.",
+   clue:"The pattern resembles a repeating radio transmission."
+  },
+  {
+   question:"Two independent observatories detect the same signal. Why is this important?",
+   desc:"Think about independent confirmation.",
+   options:["It proves aliens sent it","It makes the signal impossible","It supports that the signal is real","Both observatories must be broken"],
+   answer:2,
+   explanation:"Independent detections make an instrument-specific error less likely, but do not establish the signal's origin.",
+   clue:"Both observatories recorded matching patterns."
+  }
+ ],
+ verdict:"The signal has been independently detected and has a repeating pattern. Its origin remains uncertain and requires further research."
+}
+];
+
+// PLAYER PROGRESS
+
+let xp = Number(localStorage.getItem("dfXP")) || 0;
+let solved = Number(localStorage.getItem("dfSolved")) || 0;
+let best = Number(localStorage.getItem("dfBest")) || 0;
+
+let currentCase=null;
+let currentIndex=0;
+let lives=3;
+let gameScore=0;
+let correctCount=0;
+let locked=false;
+let lastCaseId=null;
+
+const artSVG = {
+ diamond:`<svg viewBox="0 0 120 120" fill="none">
+ <path d="M22 39L42 15H79L99 39L60 106Z" fill="#b8e3c4" stroke="#fff1c9" stroke-width="3"/>
+ <path d="M22 39H99M42 15L60 106L79 15" stroke="#557e66" stroke-width="2"/>
+ <path d="M22 39L60 39L42 15M60 39L99 39L79 15" fill="#fff" fill-opacity=".3"/>
+ </svg>`,
+ house:`<svg viewBox="0 0 120 120" fill="none">
+ <path d="M15 54L60 16L105 54" stroke="#f0c5a0" stroke-width="6"/>
+ <path d="M25 51V105H95V51" fill="#a78b9a" stroke="#f4d4b4" stroke-width="3"/>
+ <path d="M47 105V72H72V105" fill="#3b344a"/>
+ <circle cx="60" cy="36" r="8" fill="#e9bd78"/>
+ <path d="M12 107H108" stroke="#e9bd78" stroke-width="3"/>
+ </svg>`,
+ satellite:`<svg viewBox="0 0 120 120" fill="none">
+ <rect x="43" y="42" width="34" height="34" rx="5" fill="#b2d8cc" stroke="#fff" stroke-width="2"/>
+ <path d="M43 47L14 26V85L43 70ZM77 47L106 26V85L77 70Z" fill="#558b91" stroke="#c7eee3" stroke-width="2"/>
+ <path d="M60 42V20M60 76V99M43 59H20M77 59H100" stroke="#f0c98d" stroke-width="3"/>
+ <circle cx="60" cy="59" r="7" fill="#e9bd78"/>
+ </svg>`
+};
+
+function rank(points) {
+ if(points>=500)return "MASTER";
+ if(points>=250)return "EXPERT";
+ if(points>=100)return "INVESTIGATOR";
+ return "ROOKIE";
+}
+
+function updateDashboard() {
+ document.getElementById("headerXP").textContent=xp;
+ document.getElementById("totalSolved").textContent=solved;
+ document.getElementById("bestScore").textContent=best;
+ document.getElementById("rank").textContent=rank(xp);
+}
+
+function renderCases() {
+ document.getElementById("caseGrid").innerHTML=cases.map(c=>`
+ <article class="case-card">
+  <div class="case-art ${c.art}">${artSVG[c.icon]}</div>
+  <div class="case-body">
+   <div class="case-number">CASE FILE #00${c.id}</div>
+   <h3>${c.title}</h3>
+   <p>${c.description}</p>
+   <div class="case-meta">
+    <span>${c.difficulty}</span>
+    <span>${c.questions.length} QUESTIONS</span>
+   </div>
+   <button class="primary" onclick="startCase(${c.id})">Investigate Case →</button>
+  </div>
+ </article>
+ `).join("");
+}
+
+function startCase(id) {
+ currentCase=cases.find(c=>c.id===id);
+ lastCaseId=id;
+ currentIndex=0;
+ lives=3;
+ gameScore=0;
+ correctCount=0;
+ locked=false;
+
+ document.getElementById("home").style.display="none";
+ document.getElementById("result").style.display="none";
+ document.getElementById("game").style.display="block";
+
+ document.getElementById("caseTitle").textContent=currentCase.title;
+
+ renderClues();
+ showQuestion();
+}
+
+function renderClues() {
+ document.getElementById("clueList").innerHTML=currentCase.questions.map((q,i)=>`
+ <div class="clue" id="clue${i}">
+  <strong>RECORD #${i+1}</strong>
+  <span>🔒 Evidence not yet discovered</span>
+ </div>
+ `).join("");
+}
+
+function showQuestion() {
+ locked=false;
+ const q=currentCase.questions[currentIndex];
+ const percent=currentIndex/currentCase.questions.length*100;
+
+ document.getElementById("progressBar").style.width=percent+"%";
+ document.getElementById("progressPercent").textContent=Math.round(percent)+"%";
+ document.getElementById("questionCount").textContent=
+ `QUESTION ${currentIndex+1} / ${currentCase.questions.length}`;
+
+ document.getElementById("questionTag").textContent=currentCase.category;
+ document.getElementById("questionText").textContent=q.question;
+ document.getElementById("questionDesc").textContent=q.desc;
+
+ const feedback=document.getElementById("feedback");
+ feedback.className="feedback";
+ feedback.textContent="";
+
+ document.getElementById("nextBtn").style.display="none";
+
+ const answers=document.getElementById("answers");
+ answers.innerHTML="";
+
+ q.options.forEach((option,index)=>{
+  const btn=document.createElement("button");
+  btn.className="answer";
+
+  const letter=document.createElement("span");
+  letter.className="letter";
+  letter.textContent=String.fromCharCode(65+index);
+
+  const label=document.createElement("span");
+  label.textContent=option;
+
+  btn.append(letter,label);
+  btn.onclick=()=>checkAnswer(index,btn);
+  answers.appendChild(btn);
+ });
+
+ updateLives();
+ document.getElementById("gameXP").textContent=gameScore;
+}
+
+function checkAnswer(selected,button) {
+ if(locked)return;
+ locked=true;
+
+ const q=currentCase.questions[currentIndex];
+ const buttons=document.querySelectorAll(".answer");
+ const feedback=document.getElementById("feedback");
+
+ buttons.forEach(btn=>btn.disabled=true);
+
+ if(selected===q.answer) {
+  button.classList.add("correct");
+  correctCount++;
+  gameScore+=50;
+  feedback.className="feedback success";
+  feedback.textContent="✓ Excellent investigation! "+q.explanation;
+
+  const clue=document.getElementById("clue"+currentIndex);
+  clue.classList.add("unlocked");
+  clue.innerHTML=`
+   <strong>✓ EVIDENCE DISCOVERED</strong>
+   <span>${q.clue}</span>
+  `;
+ } else {
+  button.classList.add("wrong");
+  buttons[q.answer].classList.add("correct");
+  lives--;
+  feedback.className="feedback error";
+  feedback.textContent="✕ Not quite. "+q.explanation;
+ }
+
+ document.getElementById("gameXP").textContent=gameScore;
+ updateLives();
+
+ const next=document.getElementById("nextBtn");
+ next.style.display="block";
+ next.textContent=currentIndex===currentCase.questions.length-1
+  ?"Reveal Final Report →":"Next Question →";
+}
+
+function updateLives() {
+ document.getElementById("lives").textContent=
+ "♥ ".repeat(lives)+"♡ ".repeat(3-lives);
+}
+
+function nextQuestion() {
+ if(lives<=0) {
+  finishCase(false);
+  return;
+ }
+
+ currentIndex++;
+
+ if(currentIndex>=currentCase.questions.length) {
+  finishCase(true);
+  return;
+ }
+
+ showQuestion();
+}
+
+function finishCase(completed) {
+ document.getElementById("game").style.display="none";
+
+ const result=document.getElementById("result");
+ result.style.display="block";
+
+ const perfect=completed&&correctCount===currentCase.questions.length;
+ const passed=completed&&correctCount>=2;
+
+ const earned=gameScore+(perfect?50:0);
+
+ xp+=earned;
+ if(passed)solved++;
+ best=Math.max(best,earned);
+
+ localStorage.setItem("dfXP",xp);
+ localStorage.setItem("dfSolved",solved);
+ localStorage.setItem("dfBest",best);
+
+ document.getElementById("resultTitle").textContent=
+ perfect?"Master Detective!":passed?"Case Investigated!":"Case Unsolved";
+
+ document.getElementById("resultDescription").textContent=
+ perfect
+ ?"Outstanding! You discovered every clue and solved the investigation."
+ :passed
+ ?"Good investigation. Review the final report to learn more."
+ :"Your investigation ended early. Study the evidence and try again.";
+
+ document.getElementById("finalScore").textContent="+"+earned+" XP";
+
+ document.getElementById("resultDetails").innerHTML=`
+ <strong>INVESTIGATION REPORT</strong><br>
+ Correct answers: ${correctCount}/${currentCase.questions.length}<br>
+ Remaining lives: ${lives}/3<br>
+ Detective rank: ${rank(xp)}<br><br>
+ <strong>CASE ANALYSIS</strong><br>
+ ${currentCase.verdict}
+ `;
+
+ updateDashboard();
+}
+
+function goHome() {
+ document.getElementById("game").style.display="none";
+ document.getElementById("result").style.display="none";
+ document.getElementById("home").style.display="block";
+ updateDashboard();
+ renderCases();
+}
+
+function replayCase() {
+ if(lastCaseId!==null)startCase(lastCaseId);
+}
+
+updateDashboard();
+renderCases();
+
+</script>
+</body>
+</html>
